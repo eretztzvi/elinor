@@ -1,0 +1,7 @@
+.container-todo-list{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
