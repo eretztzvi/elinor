@@ -9,9 +9,20 @@ function App() {
 
   const [currentProductId, setCurrentProductId] = useState<string>("");
 
+  const [currentEdit, setCurrentEdit] = useState<IProduct | undefined>(
+    undefined
+  );
+
   const handleAddProduct = (product: IProduct) => {
     const temporaryData = [...products];
     temporaryData.push(product);
+    setProducts(temporaryData);
+  };
+
+  const handleEditProducts = (product: IProduct) => {
+    const temporaryData = [...products];
+    const findIndex = temporaryData.findIndex((p) => p.id === product.id);
+    temporaryData[findIndex] = product;
     setProducts(temporaryData);
   };
 
@@ -20,18 +31,30 @@ function App() {
   };
 
   const handleDeleteOneProduct = (id: string) => {
-    const temporaryData = [...products]
-    const findIndex = temporaryData.findIndex(product => product.id === id)
-    temporaryData.splice(findIndex, 1)
-    setProducts(temporaryData)
-  }
+    const temporaryData = [...products];
+    const findIndex = temporaryData.findIndex((product) => product.id === id);
+    temporaryData.splice(findIndex, 1);
+    setProducts(temporaryData);
+  };
+
+  const handleEditProduct = () => {
+    const temporaryData = [...products];
+    const product = temporaryData.find(
+      (product) => product.id === currentProductId
+    );
+    setCurrentEdit(product);
+  };
 
   return (
     <div className="App">
       <div className="form-box">
         <h3>Product form</h3>
         <br />
-        <Form handleAddProduct={handleAddProduct} />
+        <Form
+          product={currentEdit}
+          handleAddProduct={handleAddProduct}
+          handleEditProducts={handleEditProducts}
+        />
       </div>
       <div className="products-box">
         <h3>Products list</h3>
@@ -40,6 +63,7 @@ function App() {
           handleSetCurrentProductId={handleSetCurrentProductId}
           currentProductId={currentProductId}
           handleDeleteOneProduct={handleDeleteOneProduct}
+          handleEditProduct={handleEditProduct}
         />
       </div>
     </div>

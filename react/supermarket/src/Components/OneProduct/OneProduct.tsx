@@ -6,11 +6,13 @@ const OneProduct: React.FC<{
   handleSetCurrentProductId: (id: string) => void;
   currentProductId: string;
   handleDeleteOneProduct: (id: string) => void;
+  handleEditProduct: () => void;
 }> = ({
   product,
   handleSetCurrentProductId,
   currentProductId,
   handleDeleteOneProduct,
+  handleEditProduct
 }) => {
   return (
     <div
@@ -20,7 +22,7 @@ const OneProduct: React.FC<{
     >
       {currentProductId === product.id && (
         <div>
-          <button>Edit</button>
+          <button onClick={handleEditProduct}>Edit</button>
           <button onClick={() => handleDeleteOneProduct(product.id)}>
             Delete
           </button>

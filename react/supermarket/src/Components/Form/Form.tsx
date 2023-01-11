@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import IErrors from "../../interface/errors";
 import IProduct from "../../interface/product";
 import Product from "../../utils/Product";
 import InputBox from "../InputBox/InputBox";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const INITIAL_PRODUCT: IProduct = {
   id: "",
@@ -20,11 +20,19 @@ enum EProduct {
   amount = "amount",
 }
 
-const Form: React.FC<{ product?: IProduct , handleAddProduct: (product: IProduct) => void}> = ({
-  product = INITIAL_PRODUCT,
-  handleAddProduct
-}) => {
-  const [currentProduct, setProduct] = useState<IProduct>(product);
+const Form: React.FC<{
+  product: IProduct | undefined;
+  handleAddProduct: (product: IProduct) => void;
+  handleEditProducts: (product: IProduct) => void;
+}> = ({ product = INITIAL_PRODUCT, handleAddProduct, handleEditProducts }) => {
+  
+  useEffect(() => {
+    console.log(product);
+  }, [product]);
+
+  const [currentProduct, setProduct] = useState<IProduct>(
+    product ? product : INITIAL_PRODUCT
+  );
 
   const [currentErrors, setCurrentErrors] = useState<IErrors>({});
 
@@ -49,13 +57,18 @@ const Form: React.FC<{ product?: IProduct , handleAddProduct: (product: IProduct
       return;
     }
 
+    if (product.id.length > 0) {
+      handleEditProducts(currentProduct);
+      return;
+    }
+
     const productToSubmit = {
       ...currentProduct,
-      id: uuidv4()
-    }
-    
+      id: uuidv4(),
+    };
+
     // Add product to product list
-    handleAddProduct(productToSubmit)
+    handleAddProduct(productToSubmit);
   };
 
   const handleChange = (currentKey: string, value: string) => {

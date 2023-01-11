@@ -7,11 +7,13 @@ const ProductList: React.FC<{
   handleSetCurrentProductId: (id: string) => void;
   currentProductId: string;
   handleDeleteOneProduct: (id: string) => void;
+  handleEditProduct: () => void;
 }> = ({
   products,
   handleSetCurrentProductId,
   currentProductId,
   handleDeleteOneProduct,
+  handleEditProduct
 }) => {
   return (
     <>
@@ -25,6 +27,7 @@ const ProductList: React.FC<{
               handleSetCurrentProductId={handleSetCurrentProductId}
               currentProductId={currentProductId}
               handleDeleteOneProduct={handleDeleteOneProduct}
+              handleEditProduct={handleEditProduct}
             />
           ))}
       </div>
