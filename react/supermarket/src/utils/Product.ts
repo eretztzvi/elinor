@@ -2,20 +2,12 @@ import IErrors from "../interface/errors";
 import IProduct from "../interface/product";
 
 export default class Product {
-  public product: IProduct = {
-    title: "",
-    description: "",
-    price: 0,
-    amount: 0,
-  };
+  public product: IProduct;
 
   public errors: IErrors = {};
 
   constructor(product: IProduct) {
-    this.product.title = product.title;
-    this.product.description = product.description;
-    this.product.price = +product.price;
-    this.product.amount = +product.amount;
+    this.product = product
   }
 
   validation() {

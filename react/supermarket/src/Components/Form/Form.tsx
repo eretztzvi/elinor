@@ -3,8 +3,10 @@ import IErrors from "../../interface/errors";
 import IProduct from "../../interface/product";
 import Product from "../../utils/Product";
 import InputBox from "../InputBox/InputBox";
+import { v4 as uuidv4 } from 'uuid';
 
 const INITIAL_PRODUCT: IProduct = {
+  id: "",
   title: "",
   description: "",
   price: 0,
@@ -47,8 +49,13 @@ const Form: React.FC<{ product?: IProduct , handleAddProduct: (product: IProduct
       return;
     }
 
+    const productToSubmit = {
+      ...currentProduct,
+      id: uuidv4()
+    }
+    
     // Add product to product list
-    handleAddProduct(currentProduct)
+    handleAddProduct(productToSubmit)
   };
 
   const handleChange = (currentKey: string, value: string) => {

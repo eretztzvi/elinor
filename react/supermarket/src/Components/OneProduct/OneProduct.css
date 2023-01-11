@@ -1,4 +1,15 @@
 .one-product{
     border: 1px solid black;
     width: 100%;
+    position: relative;
+}
+
+.one-product > div {
+    position: absolute;
+    top: 5px !important;
+    right: 5px !important;
+}
+
+.one-product > div > button {
+    margin-left: 5px;
 }
