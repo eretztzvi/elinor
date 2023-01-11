@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  height: 100vh;
+  width: 60%;
+  margin: auto;
+}
+
+.products-box {
+  border: 1px solid red;
+  background-color: white;
+}
+.form-box {
+  min-height: 40%;
+  border: 1px solid green;
+  background-color: white;
+}
