@@ -18,8 +18,9 @@ enum EProduct {
   amount = "amount",
 }
 
-const Form: React.FC<{ product?: IProduct }> = ({
+const Form: React.FC<{ product?: IProduct , handleAddProduct: (product: IProduct) => void}> = ({
   product = INITIAL_PRODUCT,
+  handleAddProduct
 }) => {
   const [currentProduct, setProduct] = useState<IProduct>(product);
 
@@ -46,11 +47,13 @@ const Form: React.FC<{ product?: IProduct }> = ({
       return;
     }
 
+    // Add product to product list
+    handleAddProduct(currentProduct)
   };
 
   const handleChange = (currentKey: string, value: string) => {
-    setProduct((currentProduct) => ({
-      ...currentProduct,
+    setProduct((prod) => ({
+      ...prod,
       [currentKey]: value,
     }));
   };

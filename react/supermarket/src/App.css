@@ -8,11 +8,12 @@
 }
 
 .products-box {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   background-color: white;
+  padding-right: 10px;
 }
 .form-box {
   min-height: 40%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   background-color: white;
 }
