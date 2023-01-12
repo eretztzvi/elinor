@@ -4,6 +4,7 @@ import IProduct from "../../interface/product";
 import Product from "../../utils/Product";
 import InputBox from "../InputBox/InputBox";
 import { v4 as uuidv4 } from "uuid";
+import "./Form.css";
 
 const INITIAL_PRODUCT: IProduct = {
   id: "",
@@ -20,14 +21,24 @@ enum EProduct {
   amount = "amount",
 }
 
+const KEYS = Object.values(EProduct);
+
 const Form: React.FC<{
   product: IProduct | undefined;
   handleAddProduct: (product: IProduct) => void;
   handleEditProducts: (product: IProduct) => void;
-}> = ({ product = INITIAL_PRODUCT, handleAddProduct, handleEditProducts }) => {
-  
+  setCurrentProductId: (id: string) => void;
+  setCurrentEdit: (product: IProduct | undefined) => void;
+}> = ({
+  product = INITIAL_PRODUCT,
+  handleAddProduct,
+  handleEditProducts,
+  setCurrentEdit,
+}) => {
   useEffect(() => {
     console.log(product);
+    console.log(KEYS);
+    setProduct(product);
   }, [product]);
 
   const [currentProduct, setProduct] = useState<IProduct>(
@@ -37,6 +48,9 @@ const Form: React.FC<{
   const [currentErrors, setCurrentErrors] = useState<IErrors>({});
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    console.log(currentProduct);
+    console.log(product);
+
     event.preventDefault();
     // Create product instance
     const newProduct = new Product(currentProduct);
@@ -59,16 +73,18 @@ const Form: React.FC<{
 
     if (product.id.length > 0) {
       handleEditProducts(currentProduct);
-      return;
+    } else {
+      const productToSubmit = {
+        ...currentProduct,
+        id: uuidv4(),
+      };
+
+      // Add product to product list
+      handleAddProduct(productToSubmit);
     }
 
-    const productToSubmit = {
-      ...currentProduct,
-      id: uuidv4(),
-    };
-
-    // Add product to product list
-    handleAddProduct(productToSubmit);
+    setCurrentEdit(undefined);
+    setProduct(INITIAL_PRODUCT);
   };
 
   const handleChange = (currentKey: string, value: string) => {
@@ -79,40 +95,22 @@ const Form: React.FC<{
   };
 
   return (
-    <div className="form-container">
+    <div className={product.id ? "form-container-edit-mode" : "form-container"}>
+      {product.id && <h4>Edit Mode</h4>}
       <form onSubmit={submitForm}>
-        <InputBox
-          label="Title"
-          value={currentProduct.title}
-          currentKey={EProduct.title}
-          handleChange={handleChange}
-          error={currentErrors.title}
-        />
-        <InputBox
-          label="Description"
-          value={currentProduct.description}
-          currentKey={EProduct.description}
-          handleChange={handleChange}
-          error={currentErrors.description}
-        />
-        <InputBox
-          type="number"
-          label="Price"
-          value={currentProduct.price}
-          currentKey={EProduct.price}
-          handleChange={handleChange}
-          error={currentErrors.price}
-        />
-        <InputBox
-          type="number"
-          label="Amout"
-          value={currentProduct.amount}
-          currentKey={EProduct.amount}
-          handleChange={handleChange}
-          error={currentErrors.amount}
-        />
-
-        <button type="submit">submit</button>
+        {KEYS.map((currentKey, index) => (
+          <InputBox
+          key={index}
+            label={currentKey}
+            value={currentProduct[currentKey]}
+            currentKey={currentKey}
+            handleChange={handleChange}
+            error={currentErrors[currentKey]}
+          />
+        ))}
+        <button type="submit">
+          {product.id ? "Save Changes" : "Submit Product"}
+        </button>
       </form>
     </div>
   );

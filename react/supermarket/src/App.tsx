@@ -51,9 +51,11 @@ function App() {
         <h3>Product form</h3>
         <br />
         <Form
-          product={currentEdit}
+          product={currentEdit} // undfined | product
           handleAddProduct={handleAddProduct}
           handleEditProducts={handleEditProducts}
+          setCurrentProductId={setCurrentProductId}
+          setCurrentEdit={setCurrentEdit}
         />
       </div>
       <div className="products-box">
