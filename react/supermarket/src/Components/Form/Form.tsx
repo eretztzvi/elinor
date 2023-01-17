@@ -35,9 +35,8 @@ const Form: React.FC<{
   handleEditProducts,
   setCurrentEdit,
 }) => {
+
   useEffect(() => {
-    console.log(product);
-    console.log(KEYS);
     setProduct(product);
   }, [product]);
 
@@ -48,10 +47,9 @@ const Form: React.FC<{
   const [currentErrors, setCurrentErrors] = useState<IErrors>({});
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log(currentProduct);
-    console.log(product);
 
     event.preventDefault();
+    
     // Create product instance
     const newProduct = new Product(currentProduct);
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import Form from "./Components/Form/Form";
+import Message from "./Components/Message";
 import ProductList from "./Components/ProductList/ProductList";
 import IProduct from "./interface/product";
 
@@ -57,6 +58,7 @@ function App() {
           setCurrentProductId={setCurrentProductId}
           setCurrentEdit={setCurrentEdit}
         />
+        <Message text="HELLO"/>
       </div>
       <div className="products-box">
         <h3>Products list</h3>
